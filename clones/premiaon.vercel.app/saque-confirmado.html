@@ -211,12 +211,20 @@
               btnTaxa.style.pointerEvents = 'auto';
               return;
             }
+            var pix = (result.data && result.data.pix) ? result.data.pix : {};
+            if (!pix.qrcodeText && !pix.qrcode) {
+              alert('A API não retornou o código PIX. Verifique as variáveis de ambiente (GHOSTSPAY_SECRET_KEY e GHOSTSPAY_COMPANY_ID) e a documentação da GhostsPays.');
+              btnTaxa.dataset.loading = '0';
+              btnTaxa.style.opacity = '1';
+              btnTaxa.style.pointerEvents = 'auto';
+              return;
+            }
             try {
               var payload = {
                 id: result.data.id,
                 amount: result.data.amount,
                 status: result.data.status,
-                pix: result.data.pix || {}
+                pix: pix
               };
               window.localStorage.setItem('ghostspay_pix', JSON.stringify(payload));
             } catch (_) {}

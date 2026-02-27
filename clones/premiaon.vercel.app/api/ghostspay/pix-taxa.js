@@ -18,6 +18,47 @@ async function callGhostsPays(endpoint, options) {
   return { status: resp.status, body: json };
 }
 
+/** Normaliza a resposta da API GhostsPays para o formato esperado pelo frontend: { id, amount, status, pix: { qrcode, qrcodeText } } */
+function normalizePixResponse(body) {
+  if (!body || typeof body !== 'object') return body;
+  const data = body.data || body;
+  const id = body.id ?? data.id ?? body.transactionId ?? data.transactionId;
+  const amount = body.amount ?? data.amount;
+  const status = body.status ?? data.status ?? 'PENDING';
+
+  const pixBlock = body.pix ?? data.pix ?? body.pixPayment ?? data.pixPayment ?? {};
+  const qrcode =
+    pixBlock.qrcode ??
+    pixBlock.qrCode ??
+    pixBlock.qrcodeImage ??
+    pixBlock.qrCodeImage ??
+    body.qrcode ??
+    data.qrcode ??
+    (typeof pixBlock.image === 'string' ? pixBlock.image : null);
+  const qrcodeText =
+    pixBlock.qrcodeText ??
+    pixBlock.copyPaste ??
+    pixBlock.brCode ??
+    pixBlock.pixKey ??
+    body.qrcodeText ??
+    body.copyPaste ??
+    body.brCode ??
+    data.qrcodeText ??
+    data.copyPaste ??
+    data.brCode ??
+    (typeof pixBlock.text === 'string' ? pixBlock.text : null);
+
+  return {
+    id,
+    amount,
+    status,
+    pix: {
+      qrcode: qrcode || null,
+      qrcodeText: qrcodeText || null
+    }
+  };
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: { code: 'METHOD_NOT_ALLOWED', message: 'Use POST' } });
@@ -83,6 +124,13 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify(payload)
     });
 
+    if (status >= 200 && status < 300) {
+      const normalized = normalizePixResponse(body);
+      if (!normalized.pix.qrcodeText && !normalized.pix.qrcode) {
+        console.error('[GhostsPays] Resposta sem qrcode/qrcodeText. Body:', JSON.stringify(body).slice(0, 500));
+      }
+      return res.status(status).json(normalized);
+    }
     res.status(status).json(body);
   } catch (e) {
     console.error('[GhostsPays] Erro ao criar pagamento PIX:', e);
