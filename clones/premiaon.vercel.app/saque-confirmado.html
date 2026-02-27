@@ -9,6 +9,7 @@
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/_next/static/chunks/8a80e7184ad3a13f.css">
   <link rel="stylesheet" href="assets/_next/static/chunks/d53fa3d4da85ccbf.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 </head>
 <body class="font-sans antialiased bg-[#F3F4F6]">
   <main class="relative min-h-screen">
@@ -115,8 +116,9 @@
           <div id="area-pix-inline" class="mt-4" style="display: none;">
             <p class="text-[13px] font-semibold text-[#1A1A1A]">Escaneie o QR Code para pagar</p>
             <div class="mt-3 flex items-center justify-center">
-              <div class="flex h-[200px] w-[200px] items-center justify-center rounded-xl border border-dashed border-[#E5E7EB] bg-[#F9FAFB]">
+              <div class="flex h-[200px] w-[200px] items-center justify-center rounded-xl border border-dashed border-[#E5E7EB] bg-[#F9FAFB] relative">
                 <img id="qr-inline-imagem" alt="QR Code PIX" class="h-[180px] w-[180px] object-contain" style="display: none;">
+                <div id="qr-inline-generated" class="absolute inset-0 flex items-center justify-center" style="display:none;"></div>
                 <span id="qr-inline-placeholder" class="text-[12px] text-[#9CA3AF]">QR Code PIX</span>
               </div>
             </div>
@@ -230,6 +232,18 @@
           qrInlineImg.src = pixQrcode;
           qrInlineImg.style.display = 'block';
           if (qrInlinePlaceholder) qrInlinePlaceholder.style.display = 'none';
+        } else if (pixCode) {
+          var qrInlineGen = document.getElementById('qr-inline-generated');
+          function gerarQRInline() {
+            if (typeof QRCode === 'undefined' || !qrInlineGen || !qrInlinePlaceholder) return;
+            qrInlinePlaceholder.style.display = 'none';
+            qrInlineGen.style.display = 'flex';
+            qrInlineGen.innerHTML = '';
+            try {
+              new QRCode(qrInlineGen, { text: pixCode, width: 180, height: 180 });
+            } catch (e) {}
+          }
+          if (typeof QRCode !== 'undefined') gerarQRInline(); else window.addEventListener('load', gerarQRInline);
         }
         if (areaAntesPix) areaAntesPix.style.display = 'none';
         if (areaPixInline) areaPixInline.style.display = 'block';
