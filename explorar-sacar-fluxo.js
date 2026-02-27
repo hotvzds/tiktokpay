@@ -1,5 +1,5 @@
 /**
- * Percorre o fluxo completo: VER MEU SALDO -> Obrigado -> Sacar -> preenche CPF 11238990533 -> até o final
+ * Percorre o fluxo completo: VER MEU SALDO -> Obrigado -> Sacar -> preenche CPF (env CPF_TESTE) -> até o final
  */
 const { chromium } = require('playwright');
 const fs = require('fs');
@@ -7,8 +7,8 @@ const path = require('path');
 
 const BASE_URL = 'https://premiaon.vercel.app';
 const OUT_DIR = path.join(__dirname, 'clones', 'premiaon.vercel.app');
-const CPF = '11238990533';
-const CPF_FORMATTED = '112.389.905-33';
+const CPF = process.env.CPF_TESTE || '';
+const CPF_FORMATTED = CPF; // usar mesmo valor; formatação pode ser aplicada no script se necessário
 const VIEWPORT_W = 447;
 const VIEWPORT_H = 708;
 const MOBILE_UA = 'Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36';

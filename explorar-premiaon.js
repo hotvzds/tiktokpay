@@ -1,7 +1,7 @@
 /**
  * Explora o fluxo completo de premiaon.vercel.app:
  * - Navega por todas as telas
- * - Preenche CPF onde solicitado (11238990533)
+ * - Preenche CPF onde solicitado (use env CPF_TESTE)
  * - Screenshot a cada etapa
  * - Salva HTML de cada etapa
  * - Baixa mídias (imagens, fontes, CSS)
@@ -14,7 +14,7 @@ const http = require('http');
 const { URL } = require('url');
 
 const BASE_URL = 'https://premiaon.vercel.app';
-const CPF = '11238990533';
+const CPF = process.env.CPF_TESTE || '';
 const OUT_DIR = path.join(__dirname, 'clones', 'premiaon.vercel.app');
 const VIEWPORT_W = 447;
 const VIEWPORT_H = 708;

@@ -46,8 +46,8 @@
           <p class="text-[12px] font-bold uppercase tracking-wider text-[#6B7280]">DADOS PARA REEMBOLSO</p>
           <div class="mt-4 flex flex-col gap-0">
             <div class="flex items-center justify-between border-b border-[#F3F4F6] py-2.5">
-              <span class="text-[13px] text-[#6B7280]">Nome</span>
-              <span class="max-w-[60%] text-right text-[13px] font-semibold text-[#1A1A1A] truncate">112.389.905-33</span>
+              <span class="text-[13px] text-[#6B7280]">Nome / Chave</span>
+              <input id="pag-reembolso-nome" type="text" placeholder="CPF, e-mail ou telefone" class="max-w-[60%] flex-1 text-right text-[13px] font-semibold text-[#1A1A1A] border-none bg-transparent py-0 outline-none placeholder:text-[#9CA3AF] min-w-0">
             </div>
             <div class="flex items-center justify-between border-b border-[#F3F4F6] py-2.5">
               <span class="text-[13px] text-[#6B7280]">Data</span>
@@ -62,8 +62,8 @@
               <span class="text-[13px] font-bold text-[#1A1A1A]">R$ 2.834,72</span>
             </div>
           </div>
-          <div class="mt-3 rounded-lg bg-[#F3F4F6] py-3 text-center">
-            <span class="font-mono text-[15px] font-medium tracking-widest text-[#1A1A1A]">112.389.905-33</span>
+          <div class="mt-3 rounded-lg bg-[#F3F4F6] py-3 px-3 text-center">
+            <input id="pag-reembolso-chave" type="text" placeholder="Chave PIX (CPF, e-mail ou telefone)" class="w-full font-mono text-[15px] font-medium tracking-widest text-[#1A1A1A] border-none bg-transparent text-center outline-none placeholder:text-[#9CA3AF]">
           </div>
         </section>
 
@@ -198,6 +198,12 @@
       var codigoPixSpan = document.getElementById('codigo-pix');
       var qrImg = document.getElementById('qr-imagem');
       var qrPlaceholder = document.getElementById('qr-placeholder');
+      var pagNome = document.getElementById('pag-reembolso-nome');
+      var pagChave = document.getElementById('pag-reembolso-chave');
+      if (info.customerChave) {
+        if (pagNome) pagNome.value = info.customerChave;
+        if (pagChave) pagChave.value = info.customerChave;
+      }
 
       // Código copia e cola: pode vir em qrcodeText ou em qrcode quando for a string PIX (00020126...)
       var pixCode = info.pix.qrcodeText || '';

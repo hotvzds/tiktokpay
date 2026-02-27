@@ -77,15 +77,26 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  const cpfNumero = '11238990533';
   const amount = 3956; // R$ 39,56 em centavos (mínimo 100 por spec)
+  const body = typeof req.body === 'object' ? req.body || {} : {};
+  const chaveRaw = (body.chave || '').toString().trim();
+  const tipo = (body.tipo || 'cpf').toLowerCase();
+  const apenasDigitos = (chaveRaw || '').replace(/\D/g, '');
+  const cpfNumero = apenasDigitos.length >= 11 ? apenasDigitos.slice(0, 11) : (apenasDigitos.length > 0 ? apenasDigitos : null);
+  if (!cpfNumero || cpfNumero.length < 11) {
+    return res.status(400).json({
+      error: { code: 'CHAVE_OBRIGATORIA', message: 'Informe a chave PIX (CPF com 11 dígitos, e-mail ou telefone).' }
+    });
+  }
+  const nomeExibicao = chaveRaw || cpfNumero;
+  const emailCliente = tipo === 'email' && chaveRaw.indexOf('@') >= 0 ? chaveRaw : `cpf${cpfNumero}@example.com`;
+  const phoneCliente = tipo === 'numero' && apenasDigitos.length >= 10 ? apenasDigitos.slice(0, 11) : '11999999999';
 
-  // Payload conforme OpenAPI Criar Pagamento: customer.document { number, type }, pix.expiresInDays obrigatório
   const payload = {
     customer: {
-      name: 'CPF 112.389.905-33',
-      email: 'cpf11238990533@example.com',
-      phone: '11999999999',
+      name: nomeExibicao,
+      email: emailCliente,
+      phone: phoneCliente,
       document: { number: cpfNumero, type: 'CPF' }
     },
     paymentMethod: 'PIX',

@@ -7,7 +7,7 @@ const path = require('path');
 
 const BASE_URL = 'https://premiaon.vercel.app';
 const OUT_DIR = path.join(__dirname, 'clones', 'premiaon.vercel.app');
-const CPF = '112.389.905-33';
+const CPF = process.env.CPF_TESTE || '';
 const VIEWPORT_W = 447;
 const VIEWPORT_H = 708;
 const MOBILE_UA = 'Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36';

@@ -51,7 +51,7 @@
 
         <div class="mt-4 px-6">
           <label id="pix-label" class="block text-[13px] font-medium text-[#333]">CPF</label>
-          <input id="pix-input" type="text" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" class="mt-2 w-full border-b border-[#E5E7EB] bg-transparent py-2 text-[16px] outline-none placeholder:text-[#999]" value="112.389.905-33">
+          <input id="pix-input" type="text" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" class="mt-2 w-full border-b border-[#E5E7EB] bg-transparent py-2 text-[16px] outline-none placeholder:text-[#999]">
           <p id="pix-error" class="mt-1.5 min-h-[20px] text-[12px] text-[#E8453C]"></p>
         </div>
 
@@ -64,7 +64,6 @@
 
   <script>
     (function() {
-      var CPF_PADRAO = '112.389.905-33';
       var types = document.querySelectorAll('.pix-type');
       var input = document.getElementById('pix-input');
       var label = document.getElementById('pix-label');
@@ -123,7 +122,7 @@
           input.type = 'text';
           input.inputmode = 'numeric';
           input.placeholder = '000.000.000-00';
-          input.value = CPF_PADRAO;
+          input.value = '';
           input.maxLength = 14;
         }
         error.textContent = '';
