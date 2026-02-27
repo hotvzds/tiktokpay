@@ -9,6 +9,8 @@
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/_next/static/chunks/8a80e7184ad3a13f.css">
   <link rel="stylesheet" href="assets/_next/static/chunks/d53fa3d4da85ccbf.css">
+  <script src="assets/tiktok-pixel-config.js"></script>
+  <script src="assets/tiktok-pixel.js"></script>
 </head>
 <body class="font-sans antialiased">
   <main class="relative min-h-screen">
@@ -157,6 +159,9 @@
             backdrop.style.transform = 'scale(1)';
           }
         });
+      }
+      if (typeof ttq !== 'undefined') {
+        ttq.track('ViewContent', { content_id: 'saldo-bonus', content_name: 'Saldo TikTok Bônus', content_type: 'product', value: 2834.72, currency: 'BRL' });
       }
     })();
   </script>

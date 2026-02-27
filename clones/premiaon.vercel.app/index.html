@@ -11,6 +11,9 @@
   <link rel="apple-touch-icon" href="assets/apple-icon.png">
   <link rel="stylesheet" href="assets/_next/static/chunks/8a80e7184ad3a13f.css">
   <link rel="stylesheet" href="assets/_next/static/chunks/d53fa3d4da85ccbf.css">
+  <!-- TikTok Pixel (carregar antes de scripts que usem ttq) -->
+  <script src="assets/tiktok-pixel-config.js"></script>
+  <script src="assets/tiktok-pixel.js"></script>
 </head>
 <body class="font-sans antialiased">
   <main class="relative min-h-screen">
@@ -200,6 +203,18 @@
           if (iconMuted) iconMuted.classList.add('hidden');
           if (iconUnmuted) iconUnmuted.classList.remove('hidden');
           if (wrapUnmute) wrapUnmute.style.display = 'none';
+          if (typeof ttq !== 'undefined') {
+            ttq.track('Lead', { event_id: 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9), url: window.location.href });
+          }
+        });
+      }
+      if (typeof ttq !== 'undefined') {
+        ttq.track('ViewContent', { content_id: 'saldo-discovery', content_name: 'Descubra seu saldo', content_type: 'product', value: 0, currency: 'BRL' });
+      }
+      var btnSaldo = document.getElementById('btn-saldo');
+      if (btnSaldo && typeof ttq !== 'undefined') {
+        btnSaldo.addEventListener('click', function() {
+          ttq.track('AddToCart', { content_id: 'saque-bonus', value: 2834.72, currency: 'BRL', event_id: 'add_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9) });
         });
       }
     })();
