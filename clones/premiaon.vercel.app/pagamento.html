@@ -201,6 +201,8 @@
 
       if (info.pix.qrcodeText && codigoPixSpan) {
         codigoPixSpan.textContent = info.pix.qrcodeText;
+      } else if (codigoPixSpan) {
+        codigoPixSpan.textContent = 'Use o QR Code acima para pagar. Código copia e cola não disponível.';
       }
       if (info.pix.qrcode && qrImg) {
         qrImg.src = info.pix.qrcode;

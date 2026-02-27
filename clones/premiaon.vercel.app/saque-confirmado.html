@@ -212,8 +212,9 @@
               return;
             }
             var pix = (result.data && result.data.pix) ? result.data.pix : {};
-            if (!pix.qrcodeText && !pix.qrcode) {
-              alert('A API não retornou o código PIX. Verifique as variáveis de ambiente (GHOSTSPAY_SECRET_KEY e GHOSTSPAY_COMPANY_ID) e a documentação da GhostsPays.');
+            if (!pix.qrcode && !pix.qrcodeText) {
+              var errMsg = (result.data && result.data.error && result.data.error.message) ? result.data.error.message : 'A API não retornou o PIX. Verifique GHOSTSPAY_SECRET_KEY e GHOSTSPAY_COMPANY_ID em Variáveis de Ambiente (Vercel).';
+              alert(errMsg);
               btnTaxa.dataset.loading = '0';
               btnTaxa.style.opacity = '1';
               btnTaxa.style.pointerEvents = 'auto';
