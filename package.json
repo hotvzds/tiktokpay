@@ -1,0 +1,16 @@
+{
+  "name": "clonador-saas",
+  "private": true,
+  "scripts": {
+    "clonar": "node clonar.js",
+    "clonar:headless": "node clonar.js --headless",
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2"
+  }
+}

