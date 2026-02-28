@@ -36,7 +36,7 @@
     e = document.getElementsByTagName("script")[0];
     e.parentNode.insertBefore(n, e);
   };
-  var pixelId = (typeof w.TIKTOK_PIXEL_ID !== 'undefined' && w.TIKTOK_PIXEL_ID) ? w.TIKTOK_PIXEL_ID : 'SEU_PIXEL_ID';
+  var pixelId = (typeof w.TIKTOK_PIXEL_ID !== 'undefined' && w.TIKTOK_PIXEL_ID) ? w.TIKTOK_PIXEL_ID : 'D6HNJKRC77U2AHFT8000';
   ttq.load(pixelId);
   ttq.page();
 }(window, document, 'ttq');
