@@ -4,6 +4,8 @@
   "scripts": {
     "clonar": "node clonar.js",
     "clonar:headless": "node clonar.js --headless",
+    "explorar:ballesapparel": "node explorar-ballesapparel.js",
+    "fix:ballesapparel": "node fix-ballesapparel-paths.js",
     "start": "node server.js"
   },
   "devDependencies": {
