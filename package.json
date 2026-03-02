@@ -6,6 +6,7 @@
     "clonar:headless": "node clonar.js --headless",
     "explorar:ballesapparel": "node explorar-ballesapparel.js",
     "fix:ballesapparel": "node fix-ballesapparel-paths.js",
+    "baixar:ballesapparel": "node baixar-assets-ballesapparel.js",
     "start": "node server.js"
   },
   "devDependencies": {
