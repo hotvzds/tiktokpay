@@ -4,9 +4,10 @@
   "scripts": {
     "clonar": "node clonar.js",
     "clonar:headless": "node clonar.js --headless",
-    "explorar:ballesapparel": "node explorar-ballesapparel.js",
-    "fix:ballesapparel": "node fix-ballesapparel-paths.js",
-    "baixar:ballesapparel": "node baixar-assets-ballesapparel.js",
+    "explorar:cuidadoconelperro": "node explorar-cuidadoconelperro.js",
+    "fix:cuidadoconelperro": "node fix-cuidadoconelperro-paths.js",
+    "explorar:nike": "node explorar-nike.js",
+    "aplicar:nike": "node aplicar-nike-no-clone.js",
     "start": "node server.js"
   },
   "devDependencies": {
